@@ -1,16 +1,14 @@
 import React from 'react';
+import List from './reusable/List';
 
 const Cars = (props) => {
-  const { title, carData } = props;
+  const { title, superCars, luxuryCars } = props;
 
-  let superCars = carData.superCars.map((car) => {
-    console.log(car);
-    return (
-      <div>
-        <img src={car.url} width="200px" />
-        <p>{car.name}</p>
-      </div>
-    );
+  let supercars = superCars.map((car) => {
+    return <List {...car} />;
+  });
+  let luxurycars = luxuryCars.map((car) => {
+    return <List {...car} />;
   });
 
   return (
@@ -19,11 +17,11 @@ const Cars = (props) => {
 
       <div>
         <h1>super cars</h1>
-        <div style={carsStyles}>{superCars}</div>
+        <div style={carsStyles}>{supercars}</div>
       </div>
       <div>
         <h1>luxury cars</h1>
-        <div style={carsStyles}></div>
+        <div style={carsStyles}>{luxurycars}</div>
       </div>
     </div>
   );
