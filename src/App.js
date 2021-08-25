@@ -6,7 +6,7 @@ import FriedRice from './images/Fried-rice.jpg';
 import './App.css';
 import Cars from './components/Cars';
 import Food from './components/Food';
-import Form from './components/Form';
+import { LuxuryCarsForm, SuperCarsForm } from './components/Form';
 
 class App extends React.Component {
   state = {
@@ -47,25 +47,29 @@ class App extends React.Component {
 
     food: [
       { id: 1, name: 'Fried Rice', url: FriedRice },
-      { id: 1, name: 'Afang Soup', url: Afang },
-      { id: 1, name: 'Ewa agonyi', url: Ewa },
+      { id: 2, name: 'Afang Soup', url: Afang },
+      { id: 3, name: 'Ewa agonyi', url: Ewa },
     ],
+
+    right: null,
+    left: null,
   };
 
-  addLuxuryCars = (incomingData) => {
+  addLuxuryCar = (incomingState) => {
     let newId = this.state.luxuryCars.length + 1;
-    let newData = { id: newId, ...incomingData };
+    let newCar = { id: newId, ...incomingState };
     this.setState({
-      luxuryCars: [...this.state.luxuryCars, newData],
+      luxuryCars: [...this.state.luxuryCars, newCar],
     });
-    console.log(this.state);
   };
 
+  removeState = (incomingState) => {};
   render() {
+    console.log(this.state);
     return (
       <div>
         <h1>Welcome to React</h1>
-        <img src={Ewa} />
+        <img src={Ewa} alt="..." />
 
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt ut
@@ -73,13 +77,33 @@ class App extends React.Component {
           aliquid ea exercitationem ullam ratione consequatur deserunt minima
           assumenda explicabo, libero ad?
         </p>
-        <Form addLuxuryCars={this.addLuxuryCars} />
+        <LuxuryCarsForm addLuxuryCar={this.addLuxuryCar} />
         <Cars
           title="Cars"
           luxuryCars={this.state.luxuryCars}
           superCars={this.state.superCars}
+          removeState={this.removeState}
         />
-        <Food foodList={this.state.food} />
+        <Food removeState={this.removeState} foodList={this.state.food} />
+
+        <div
+          style={{
+            width: '400px',
+            height: '200px',
+            backgroundImage: `
+            ${
+              this.state.right !== null
+                ? ` linear-gradient(to right, rgba(255, ${this.state.right}, 0 ), rgba(255, 255, 0 ), rgba(255, 0, ${this.state.right} ))`
+                : ` linear-gradient(to right, rgba(255, 0, 0 ), rgba(255, 255, 0 ), rgba(255, 0, 255 ))`
+            }`,
+          }}
+          onMouseMove={(e) => {
+            this.setState({
+              right: e.clientX,
+              left: e.clientY,
+            });
+          }}
+        ></div>
       </div>
     );
   }

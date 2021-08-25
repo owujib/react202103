@@ -1,43 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
+import FormElement from './reusable/FormElement';
 
-class Form extends React.Component {
-  state = {
-    name: '',
-    url: '',
-  };
+export class LuxuryCarsForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      url: '',
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.addLuxuryCar(this.state);
+    this.setState({
+      name: '',
+      url: '',
+    });
+  }
   render() {
     return (
-      <div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            this.props.addLuxuryCars(this.state);
-          }}
-        >
-          <input
+      <form onSubmit={this.handleSubmit}>
+        <div>
+          <FormElement
             type="text"
-            onChange={(e) => {
-              this.setState({ name: e.target.value });
-            }}
+            className="form-control"
+            name="name"
+            id="name"
             value={this.state.name}
-            placeholder="enter car name"
-          />
-          <br /> <br />
-          <input
+            placeholder="enter a car name"
             onChange={(e) => {
-              this.setState({ url: e.target.value });
+              this.setState({
+                name: e.target.value,
+              });
             }}
-            value={this.state.url}
-            type="text"
-            placeholder="enter car url/link"
           />
-          <br />
-          <br />
-          <input type="submit" value="submit form" />
-        </form>
-      </div>
+        </div>
+        <div>
+          <FormElement
+            onChange={(e) => {
+              this.setState({
+                url: e.target.value,
+              });
+            }}
+            type="url"
+            name="url"
+            value={this.state.url}
+            id="url"
+            placeholder="enter a car url/link"
+          />
+        </div>
+        <div>
+          <FormElement type="submit" value="submit" />
+        </div>
+      </form>
     );
   }
 }
 
-export default Form;
+export class SuperCarsForm extends Component {}

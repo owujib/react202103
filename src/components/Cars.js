@@ -2,13 +2,13 @@ import React from 'react';
 import List from './reusable/List';
 
 const Cars = (props) => {
-  const { title, superCars, luxuryCars } = props;
+  const { title, superCars, luxuryCars, removeState } = props;
 
   let supercars = superCars.map((car) => {
-    return <List {...car} />;
+    return <List key={car.id} {...car} removeState={removeState} />;
   });
   let luxurycars = luxuryCars.map((car) => {
-    return <List {...car} />;
+    return <List key={car.id} {...car} removeState={removeState} />;
   });
 
   return (
